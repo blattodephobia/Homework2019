@@ -57,7 +57,7 @@ namespace Algorithms
         private static int Height_Checked<TKey, TValue>(this BinaryTreeNode<TKey, TValue> subTreeRoot)
         {
             return Math.Max(
-                val1: (subTreeRoot.Left?.Height()  + 1) ?? 0,
+                val1: (subTreeRoot.Left?.Height() + 1) ?? 0,
                 val2: (subTreeRoot.Right?.Height() + 1) ?? 0);
         }
 
