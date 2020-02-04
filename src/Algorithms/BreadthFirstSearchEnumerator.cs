@@ -5,18 +5,21 @@ using System.Text;
 
 namespace Algorithms
 {
-    public class BreadthFirstSearchEnumerator<TKey, TValue> : IEnumerator<BinaryTreeNode<TKey, TValue>>
+    public class BreadthFirstSearchEnumerator<TNode> : IEnumerator<TNode>
+        where TNode : IBinaryTreeNode<TNode>
     {
-        private readonly Queue<BinaryTreeNode<TKey, TValue>> _bfsQueue = new Queue<BinaryTreeNode<TKey, TValue>>();
-        private readonly BinaryTreeNode<TKey, TValue> _subTreeRoot;
+        private readonly Queue<TNode> _bfsQueue = new Queue<TNode>();
+        private readonly TNode _subTreeRoot;
 
-        public BreadthFirstSearchEnumerator(BinaryTreeNode<TKey, TValue> subTreeRoot)
+        public BreadthFirstSearchEnumerator(TNode subTreeRoot)
         {
-            _subTreeRoot = subTreeRoot ?? throw new ArgumentNullException(nameof(subTreeRoot));
+            if (subTreeRoot == null) throw new ArgumentNullException(nameof(subTreeRoot));
+
+            _subTreeRoot = subTreeRoot;
             Init();
         }
 
-        public BinaryTreeNode<TKey, TValue> Current { get; private set; }
+        public TNode Current { get; private set; }
 
         object IEnumerator.Current => Current;
         
@@ -24,7 +27,7 @@ namespace Algorithms
         {
             if (_bfsQueue.Count == 0)
             {
-                Current = null;
+                Current = default;
                 return false;
             }
 

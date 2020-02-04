@@ -6,15 +6,17 @@ using System.Text;
 namespace Algorithms
 {
     [DebuggerDisplay("{Key}: {Value}")]
-    public class BinaryTreeNode<TKey, TValue> : TreeNode<TKey, TValue>
+    public class BinaryTreeNode<TKey> : IBinaryTreeNode<TKey, BinaryTreeNode<TKey>>
     {
-        public BinaryTreeNode(TKey key, TValue value) :
-            base(key, value)
+        public BinaryTreeNode(TKey key)
         {
+            Key = key;
         }
 
-        public BinaryTreeNode<TKey, TValue> Left { get; set; }
+        public TKey Key { get; }
 
-        public BinaryTreeNode<TKey, TValue> Right { get; set; }
+        public BinaryTreeNode<TKey> Left { get; set; }
+
+        public BinaryTreeNode<TKey> Right { get; set; }
     }
 }

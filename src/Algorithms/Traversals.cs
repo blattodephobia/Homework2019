@@ -6,9 +6,9 @@ namespace Algorithms
 {
     public static class Traversals
     {
-        public static IEnumerable<BinaryTreeNode<TKey, TValue>> BreadthFirstSearch<TKey, TValue>(this BinaryTreeNode<TKey, TValue> subTreeRoot)
+        public static IEnumerable<TNode> BreadthFirstSearch<TNode>(this TNode subTreeRoot) where TNode : IBinaryTreeNode<TNode>
         {
-            return new BreadthFirstSearchEnumerable<TKey, TValue>(subTreeRoot);
+            return new BreadthFirstSearchEnumerable<TNode>(subTreeRoot);
         }
     }
 }

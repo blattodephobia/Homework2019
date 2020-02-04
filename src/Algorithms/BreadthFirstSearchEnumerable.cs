@@ -5,16 +5,18 @@ using System.Text;
 
 namespace Algorithms
 {
-    public class BreadthFirstSearchEnumerable<TKey, TValue> : IEnumerable<BinaryTreeNode<TKey, TValue>>
+    public class BreadthFirstSearchEnumerable<TNode> : IEnumerable<TNode> where TNode : IBinaryTreeNode<TNode>
     {
-        private readonly BinaryTreeNode<TKey, TValue> _subTreeRoot;
+        private readonly TNode _subTreeRoot;
 
-        public BreadthFirstSearchEnumerable(BinaryTreeNode<TKey, TValue> subTreeRoot)
+        public BreadthFirstSearchEnumerable(TNode subTreeRoot)
         {
-            _subTreeRoot = subTreeRoot ?? throw new ArgumentNullException(nameof(subTreeRoot));
+            if (subTreeRoot == null) throw new ArgumentNullException(nameof(subTreeRoot));
+
+            _subTreeRoot = subTreeRoot;
         }
 
-        public IEnumerator<BinaryTreeNode<TKey, TValue>> GetEnumerator() => new BreadthFirstSearchEnumerator<TKey, TValue>(_subTreeRoot);
+        public IEnumerator<TNode> GetEnumerator() => new BreadthFirstSearchEnumerator<TNode>(_subTreeRoot);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
