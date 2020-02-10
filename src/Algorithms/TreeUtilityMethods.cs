@@ -57,8 +57,8 @@ namespace Algorithms
         private static int Height_Checked<TNode>(this TNode subTreeRoot) where TNode : IBinaryTreeNode<TNode>
         {
             return Math.Max(
-                val1: (subTreeRoot.Left?.Height() + 1) ?? 0,
-                val2: (subTreeRoot.Right?.Height() + 1) ?? 0);
+                val1: (subTreeRoot.Left?.Height_Checked() + 1) ?? 0,
+                val2: (subTreeRoot.Right?.Height_Checked() + 1) ?? 0);
         }
 
         public static bool IsFull<TNode>(this TNode subTreeRoot) where TNode : IBinaryTreeNode<TNode>
@@ -71,12 +71,29 @@ namespace Algorithms
             return subTreeRoot.IsFull_Checked();
         }
 
+        public static bool IsLeaf<TNode>(this TNode subTreeRoot) where TNode : IBinaryTreeNode<TNode>
+        {
+            return subTreeRoot?.IsLeaf_Checked() ?? throw new ArgumentNullException(nameof(subTreeRoot));
+        }
+
+        public static bool IsNode<TNode>(this TNode subTreeRoot) where TNode : IBinaryTreeNode<TNode>
+        {
+            return subTreeRoot?.IsNode_Checked() ?? throw new ArgumentNullException(nameof(subTreeRoot));
+        }
+
+        private static bool IsNode_Checked<TNode>(this TNode subTreeRoot) where TNode : IBinaryTreeNode<TNode>
+        {
+            return subTreeRoot.Left != null && subTreeRoot.Right != null;
+        }
+
+        private static bool IsLeaf_Checked<TNode>(this TNode subTreeRoot) where TNode : IBinaryTreeNode<TNode>
+        {
+            return subTreeRoot.Left == null && subTreeRoot.Right == null;
+        }
+
         private static bool IsFull_Checked<TNode>(this TNode subTreeRoot) where TNode : IBinaryTreeNode<TNode>
         {
-            return
-                (subTreeRoot.Left == null && subTreeRoot.Right == null) ||  // is leaf OR
-                (subTreeRoot.Left != null && subTreeRoot.Right != null) &&  // is node AND
-                subTreeRoot.Left.IsFull() && subTreeRoot.Right.IsFull();    // sub tree is also full
+            return subTreeRoot.IsLeaf_Checked() || (subTreeRoot.IsNode_Checked() && subTreeRoot.Left.IsFull() && subTreeRoot.Right.IsFull());
         }
     }
 }
